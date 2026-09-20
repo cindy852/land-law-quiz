@@ -163,11 +163,29 @@
         // 自動從外部 JSON 載入題庫
         async function loadDatabase() {
             try {
-                const res = await fetch('questions.json');
-                fullDatabase = await res.json();
-                updateDashboard();
-            } catch (e) {
-                console.error("題庫載入失敗或未找到 questions.json 檔案", e);
+               // 加上時間戳記避免被 GitHub Pages 伺服器與瀏覽器強行快取
+        const cacheBuster = `?v=${new Date().getTime()}`;
+        const res = await fetch(`./questions.json${cacheBuster}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!res.ok) {
+            throw new Error(`HTTP 錯誤！狀態碼：${res.status}`);
+        }
+
+        fullDatabase = await res.json();
+        
+        // 載入成功後更新 UI
+        if (typeof updateDashboard === 'function') {
+            updateDashboard();
+        }
+        console.log(`✅ 成功載入 ${fullDatabase.length} 題題庫！`);
+    } catch (e) {
+        console.error("❌ 題庫載入失敗：", e);
+        alert("題庫檔 (questions.json) 讀取失敗，請確認檔案是否已成功上傳至 GitHub。");
             }
         }
 
