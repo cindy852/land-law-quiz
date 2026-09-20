@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不動產經紀人 - 土地法及土地稅法 97-114全真題庫</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .option-card { transition: all 0.2s ease; }
+        .option-card:hover:not(.disabled) { border-color: #3b82f6; background-color: #eff6ff; }
+        .option-correct { border-color: #10b981 !important; background-color: #d1fae5 !important; color: #065f46; }
+        .option-incorrect { border-color: #ef4444 !important; background-color: #fee2e2 !important; color: #991b1b; }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <header class="bg-indigo-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div>
+                <h1 class="text-lg md:text-xl font-bold flex items-center gap-2">
+                    <span>🏠</span> 不動產經紀人 97-114歷屆試題庫
+                </h1>
+                <p class="text-xs text-indigo-200">土地法及土地稅法概要（40題國考全真模擬）</p>
+            </div>
+            <div id="timer-box" class="bg-indigo-800 px-3 py-1.5 rounded-lg text-sm font-mono flex items-center gap-2 hidden">
+                <span>⏱️</span>
+                <span id="timer-text" class="font-bold text-yellow-300">60:00</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-6 w-full flex-grow">
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="bg-white rounded-xl shadow-md p-6 md:p-8 border border-slate-200">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2 text-center">國考模擬測驗設定</h2>
+            <p class="text-slate-600 mb-6 text-sm text-center">
+                系統已備妥 97~114 年歷屆試題架構！答對題進入冷卻，錯題優先練習。
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <!-- 1. 年份選單 -->
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <label class="block text-indigo-900 font-bold mb-2 text-sm">📁 1. 選擇考試年份／分類</label>
+                    <select id="category-select" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-sm font-medium focus:outline-none focus:border-indigo-500">
+                        <option value="ALL">🌟 全部年份混合隨機大考 (720題)</option>
+                        <option value="113年">113 年 國家考試真題 (40題)</option>
+                        <option value="112年">112 年 國家考試真題 (40題)</option>
+                        <option value="111年">111 年 國家考試真題 (40題)</option>
+                        <option value="110年">110 年 國家考試真題 (40題)</option>
+                        <option value="109年">109 年 國家考試真題 (40題)</option>
+                        <option value="108年">108 年 國家考試真題 (40題)</option>
+                        <option value="107年">107 年 國家考試真題 (40題)</option>
+                        <option value="106年">106 年 國家考試真題 (40題)</option>
+                        <option value="105年">105 年 國家考試真題 (40題)</option>
+                        <option value="104年">104 年 國家考試真題 (40題)</option>
+                        <option value="103年">103 年 國家考試真題 (40題)</option>
+                        <option value="102年">102 年 國家考試真題 (40題)</option>
+                        <option value="101年">101 年 國家考試真題 (40題)</option>
+                        <option value="100年">100 年 國家考試真題 (40題)</option>
+                        <option value="99年">99 年 國家考試真題 (40題)</option>
+                        <option value="98年">98 年 國家考試真題 (40題)</option>
+                        <option value="97年">97 年 國家考試真題 (40題)</option>
+                    </select>
+                </div>
+
+                <!-- 2. 出題數選單 -->
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <label class="block text-indigo-900 font-bold mb-2 text-sm">📝 2. 單次出題數</label>
+                    <select id="quiz-count-select" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-sm font-medium focus:outline-none focus:border-indigo-500">
+                        <option value="40" selected>40 題 (標準國考整份試卷)</option>
+                        <option value="20">20 題 (半份練習)</option>
+                        <option value="10">10 題 (快速刷題)</option>
+                        <option value="all">該分類下全部題目</option>
+                    </select>
+                </div>
+
+                <!-- 3. 出題模式選單 -->
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <label class="block text-indigo-900 font-bold mb-2 text-sm">🎯 3. 刷題模式</label>
+                    <select id="mode-select" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-sm font-medium focus:outline-none focus:border-indigo-500">
+                        <option value="smart" selected>💡 智慧模式 (錯題與未答優先)</option>
+                        <option value="wrong_only">🔥 專攻歷次錯題</option>
+                        <option value="random">🎲 完全隨機出題</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 看板統計 -->
+            <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100 mb-6 flex flex-wrap justify-around text-center text-sm">
+                <div>
+                    <span class="text-slate-500 block">目前題庫已載入</span>
+                    <span id="stat-total" class="text-lg font-bold text-slate-700">0</span> 題
+                </div>
+                <div>
+                    <span class="text-slate-500 block">已精通 (冷卻中)</span>
+                    <span id="stat-correct" class="text-lg font-bold text-emerald-600">0</span> 題
+                </div>
+                <div>
+                    <span class="text-slate-500 block">待複習錯題</span>
+                    <span id="stat-wrong" class="text-lg font-bold text-rose-600">0</span> 題
+                </div>
+            </div>
+
+            <div class="text-center flex justify-center gap-4">
+                <button onclick="startQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded-lg shadow-lg transition text-lg">
+                    🚀 開始 40 題測驗
+                </button>
+                <button onclick="resetHistory()" class="bg-slate-300 hover:bg-slate-400 text-slate-700 font-semibold py-3 px-4 rounded-lg transition text-sm">
+                    🗑️ 清空歷史紀錄
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="hidden">
+            <div class="mb-4 flex items-center justify-between text-sm text-slate-600">
+                <span id="question-progress" class="font-semibold">第 1 / 40 題</span>
+                <span id="score-live" class="font-bold text-indigo-600">目前得分: 0</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2.5 rounded-full mb-6 overflow-hidden">
+                <div id="progress-bar" class="bg-indigo-600 h-full w-0 transition-all duration-300"></div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 border border-slate-200">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full font-bold" id="question-category">年度</span>
+                    <span class="text-xs text-slate-400 font-mono" id="question-tag">考點說明</span>
+                </div>
+                
+                <h3 class="text-base md:text-lg font-bold text-slate-800 mb-5 leading-relaxed" id="question-text">題目載入中...</h3>
+                <div class="space-y-3" id="options-container"></div>
+
+                <div id="explanation-box" class="mt-6 p-4 rounded-lg bg-amber-50 border border-amber-200 text-slate-700 hidden">
+                    <h4 class="font-bold text-amber-900 mb-1 flex items-center gap-1 text-sm">💡 觀念解析與相關法條</h4>
+                    <p id="explanation-text" class="text-sm leading-relaxed text-slate-700"></p>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center">
+                <button id="prev-btn" onclick="prevQuestion()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-5 py-2.5 rounded-lg text-sm font-semibold disabled:opacity-40">⬅️ 上一題</button>
+                <button id="next-btn" onclick="nextQuestion()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg text-sm font-semibold shadow">下一題 ➡️</button>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="bg-white rounded-xl shadow-md p-6 md:p-8 text-center border border-slate-200 hidden">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">🎉 測驗完成！</h2>
+            <div class="w-36 h-36 rounded-full border-8 border-indigo-500 flex items-center justify-center mx-auto my-6 bg-indigo-50 shadow-inner">
+                <div>
+                    <span id="final-score" class="text-4xl font-extrabold text-indigo-700">0</span>
+                    <span class="text-xs text-indigo-500 block font-bold">總分</span>
+                </div>
+            </div>
+            <button onclick="restartQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-bold shadow-lg transition">🔄 返回主選單</button>
+        </div>
+
+    </main>
+
+    <script>
+        let fullDatabase = [];
+
+        // 自動從外部 JSON 載入題庫
+        async function loadDatabase() {
+            try {
+                const res = await fetch('questions.json');
+                fullDatabase = await res.json();
+                updateDashboard();
+            } catch (e) {
+                console.error("題庫載入失敗或未找到 questions.json 檔案", e);
+            }
+        }
+
+        function getSavedRecords() {
+            const data = localStorage.getItem('land_law_quiz_v5');
+            return data ? JSON.parse(data) : { correctIds: [], wrongIds: [] };
+        }
+
+        function saveRecords(records) {
+            localStorage.setItem('land_law_quiz_v5', JSON.stringify(records));
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            const records = getSavedRecords();
+            document.getElementById('stat-total').innerText = fullDatabase.length;
+            document.getElementById('stat-correct').innerText = records.correctIds.length;
+            document.getElementById('stat-wrong').innerText = records.wrongIds.length;
+        }
+
+        let currentQuizList = [];
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        function startQuiz() {
+            if (fullDatabase.length === 0) {
+                alert("目前題庫尚載入中或未放入 questions.json 檔案！");
+                return;
+            }
+
+            const catVal = document.getElementById('category-select').value;
+            const countVal = document.getElementById('quiz-count-select').value;
+            const modeVal = document.getElementById('mode-select').value;
+            const records = getSavedRecords();
+
+            let baseList = (catVal === "ALL") 
+                ? [...fullDatabase] 
+                : fullDatabase.filter(item => item.category === catVal);
+
+            let pool = baseList;
+            if (modeVal === "wrong_only") {
+                pool = baseList.filter(q => records.wrongIds.includes(q.id));
+                if (pool.length === 0) { alert("目前無錯題！自動切換為全部出題"); pool = baseList; }
+            }
+
+            let shuffled = pool.sort(() => 0.5 - Math.random());
+            const targetCount = countVal === "all" ? shuffled.length : parseInt(countVal);
+            currentQuizList = shuffled.slice(0, targetCount);
+
+            userAnswers = new Array(currentQuizList.length).fill(null);
+            currentQuestion = 0;
+            score = 0;
+
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const data = currentQuizList[currentQuestion];
+            document.getElementById('question-category').innerText = data.category;
+            document.getElementById('question-tag').innerText = data.tag || '歷屆試題';
+            document.getElementById('question-text').innerText = `${currentQuestion + 1}. ${data.question}`;
+            document.getElementById('question-progress').innerText = `第 ${currentQuestion + 1} / ${currentQuizList.length} 題`;
+            
+            document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / currentQuizList.length) * 100}%`;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            const selectedAns = userAnswers[currentQuestion];
+
+            data.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-lg border border-slate-200 option-card flex items-center justify-between text-sm md:text-base`;
+                if (selectedAns !== null) {
+                    btn.classList.add('disabled');
+                    if (idx === data.correct) btn.classList.add('option-correct', 'font-bold');
+                    else if (idx === selectedAns) btn.classList.add('option-incorrect');
+                }
+                btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}. ${opt}</span>`;
+                btn.onclick = () => selectOption(idx);
+                container.appendChild(btn);
+            });
+
+            document.getElementById('prev-btn').disabled = currentQuestion === 0;
+            document.getElementById('next-btn').innerText = (currentQuestion === currentQuizList.length - 1) ? '🏁 提交試卷' : '下一題 ➡️';
+            
+            const expBox = document.getElementById('explanation-box');
+            if (selectedAns !== null) {
+                document.getElementById('explanation-text').innerText = data.explanation || "暫無詳細解析";
+                expBox.classList.remove('hidden');
+            } else expBox.classList.add('hidden');
+        }
+
+        function selectOption(index) {
+            if (userAnswers[currentQuestion] !== null) return;
+            userAnswers[currentQuestion] = index;
+            const qData = currentQuizList[currentQuestion];
+            const records = getSavedRecords();
+
+            if (index === qData.correct) {
+                score += (100 / currentQuizList.length);
+                if (!records.correctIds.includes(qData.id)) records.correctIds.push(qData.id);
+                records.wrongIds = records.wrongIds.filter(id => id !== qData.id);
+            } else {
+                if (!records.wrongIds.includes(qData.id)) records.wrongIds.push(qData.id);
+                records.correctIds = records.correctIds.filter(id => id !== qData.id);
+            }
+            saveRecords(records);
+            document.getElementById('score-live').innerText = `目前得分: ${Math.round(score)}`;
+            loadQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < currentQuizList.length - 1) { currentQuestion++; loadQuestion(); }
+            else finishQuiz();
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) { currentQuestion--; loadQuestion(); }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            document.getElementById('final-score').innerText = Math.round(score);
+        }
+
+        function restartQuiz() {
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+            updateDashboard();
+        }
+
+        function resetHistory() {
+            if (confirm("清空紀錄？")) { localStorage.removeItem('land_law_quiz_v5'); updateDashboard(); }
+        }
+
+        window.onload = loadDatabase;
+    </script>
+</body>
+</html>
